@@ -1,0 +1,7 @@
+<h1>Hei og velkommen til hytteboken!</h1>
+<hr>
+<form action="{% url "guest_book:index" %}" method="post">
+{% csrf_token %}
+  <textarea name="message" style="width:600px; height:300px"></textarea>
+  <input type="submit" value="Send">
+</form>
