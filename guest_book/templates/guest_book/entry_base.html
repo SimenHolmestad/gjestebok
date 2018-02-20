@@ -1,0 +1,13 @@
+{% load entry_extras %}
+<h3>{{ entry.title }}</h2>
+<p>published {{ entry.pub_date }} by {{ entry.author }}</p>
+{% if entry.members_involved %}
+  <h4>Members involved:</h4>
+  <ul>
+    {% for involved_member in entry.members_involved.all %}
+      <li>{{ involved_member }} - {% age_at involved_member entry %} years</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<p>{{ entry.text }}</p>
+

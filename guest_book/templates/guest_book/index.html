@@ -1,5 +1,13 @@
 <h1>Hei og velkommen til hytteboken!</h1>
 <hr>
+{% if members %}
+  <h1>Member List</h1>
+  {% for member in members %}
+    <ul>
+      <li>{{ member.name }}: {{ member.age }} år</li>
+    </ul>
+  {% endfor %}
+{% endif %}
 <form action="{% url "guest_book:index" %}" method="post">
 {% csrf_token %}
   <textarea name="message" style="width:600px; height:300px"></textarea>

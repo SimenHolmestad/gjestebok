@@ -1,0 +1,24 @@
+<h1>{{ member }}</h1>
+<h3>Birth date: {{ member.birth_date }}</h3>
+<h3>Mail: {{ member.email }}</h3>
+<h3>Phone: {{ member.phone }}</h3>
+<h3>About: {{ member.about_me }}</h3>
+<hr>
+{% if author_entries %}
+  <h2>Entrys written:</h2>
+  {% for author_entry in author_entries %}
+    {% include "guest_book/entry_base.html" with entry=author_entry %}
+    <hr>
+  {% endfor %}
+{% else %}
+  <h2>{{ member.first_name }} has not written any entrys yet </h2>
+{% endif %}
+<hr>
+{% if involved_entries %}
+  <h2>Entrys involved in:</h2>
+  {% for involved_entry in involved_entries %}
+    {% include "guest_book/entry_base.html" with entry=involved_entry %}
+  {% endfor %}
+{% else %}
+  <h2>{{ member.first_name }} does not appear in other entries</h2>
+{% endif %}

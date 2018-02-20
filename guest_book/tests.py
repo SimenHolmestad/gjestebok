@@ -20,6 +20,9 @@ def generate_member():
                   birth_date = timezone.now())
 
 def create_date(delta_days):
+    return timezone.localdate() + datetime.timedelta(days=delta_days)
+
+def create_time(delta_days):
     return timezone.now() + datetime.timedelta(days=delta_days)
 
 class MemberTestCase(TestCase):
@@ -30,9 +33,9 @@ class MemberTestCase(TestCase):
     
     def test_age(self):
         member = generate_member()
-        member.birth_date = create_date(-368)
+        member.birth_date = create_date(-368*2)
         member.save()
-        self.assertEqual(member.get_age(), 1)
+        self.assertEqual(member.get_age(), 2)
 
     def test_age_at(self):
         member = generate_member()
@@ -54,14 +57,14 @@ class EntryTestCase(TestCase):
         member.birth_date = create_date(-750)
         member.save()
 
-        entry = Entry(author = member, pub_date = create_date(-370))
+        entry = Entry(author = member, pub_date = create_time(-370))
         self.assertEqual(entry.get_author_age_at_creation(), 1)
 
     def test_author_involved(self):
         member = generate_member()
         member.save()
 
-        entry = Entry(author = member, pub_date=create_date(0))
+        entry = Entry(author = member, pub_date=create_time(0))
         entry.save()
 
         members_involved = entry.members_involved.all()
