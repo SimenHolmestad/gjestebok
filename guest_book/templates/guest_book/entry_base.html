@@ -5,7 +5,7 @@
   <h4>Members involved:</h4>
   <ul>
     {% for involved_member in entry.members_involved.all %}
-      <li>{{ involved_member }} - {% age_at involved_member entry %} years</li>
+      <li><a href = "{% url 'guest_book:detail' involved_member.id %}">{{ involved_member }}</a> - {% age_at involved_member entry %} years</li>
     {% endfor %}
   </ul>
 {% endif %}

@@ -1,15 +1,14 @@
-<h1>Hei og velkommen til hytteboken!</h1>
+<h1>Hello and welcome to the guest book!</h1>
+<h3><a href="">Edit members</a></h3>
+<h3><a href="">New entry</a></h3>
+<h3><a href="{% url 'guest_book:members' %}">Members</a></h3>
 <hr>
-{% if members %}
-  <h1>Member List</h1>
-  {% for member in members %}
-    <ul>
-      <li>{{ member.name }}: {{ member.age }} år</li>
-    </ul>
+{% if not entries %}
+  <h2>There are noe entries yet</h2>
+{% else %}
+  <h2>Last entries:</h2>
+  {% for entry in entries %}
+    {% include "guest_book/entry_base.html" with entry=entry %}
+    <hr>
   {% endfor %}
 {% endif %}
-<form action="{% url "guest_book:index" %}" method="post">
-{% csrf_token %}
-  <textarea name="message" style="width:600px; height:300px"></textarea>
-  <input type="submit" value="Send">
-</form>

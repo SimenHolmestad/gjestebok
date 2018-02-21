@@ -3,13 +3,9 @@ from .models import Entry, Member
 from django.http import Http404
 
 def index(request):
-    try:
-        text_entered=request.POST["message"]
-        print (text_entered)
-    except (KeyError):
-        pass
     members = Member.objects.all()
-    context = {"members":members}
+    last_entries = Entry.objects.all().order_by("-pub_date")[:5];
+    context = {"entries":last_entries}
     return render(request, "guest_book/index.html", context)
 
 def members(request):
