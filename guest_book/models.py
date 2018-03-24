@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
@@ -9,7 +9,7 @@ class Member(models.Model):
     last_name = models.CharField("etternavn", max_length=50)
     phone = models.CharField("mobilnummer", max_length=20)
     number_of_entries = models.IntegerField(default = 0)
-    age = models.IntegerField(default = 0)
+    profile_photo = models.ImageField(null = True, blank = True)
     email = models.EmailField(
         verbose_name = "e-post",
         max_length=255,
@@ -29,9 +29,10 @@ class Member(models.Model):
 
 class Entry(models.Model):
     author = models.ForeignKey(Member, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField("date published")
+    pub_date = models.DateTimeField("date published", default=datetime.now)
     title = models.CharField(max_length=255, unique=False)
     text = models.TextField()
+    image = models.ImageField(blank = True, null = True)
     members_involved = models.ManyToManyField(Member,
                                               blank=True,
                                               related_name="involved_entries")
@@ -43,10 +44,7 @@ class Entry(models.Model):
         saves the object to the database, upping number_of_entries
         of the related user.
         """
-        if self.pub_date == None:
-            self.pubdate = timezone.now()
         self.author.number_of_entries += 1
-        self.author_id = self.author.id
         self.author.save()
 
         super(Entry, self).save(*args, **kwargs)

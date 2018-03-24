@@ -1,11 +1,14 @@
 {% load entry_extras %}
 <h3>{{ entry.title }}</h2>
+{% if entry.image %}
+  <img src="{{ entry.image.url }}", alt="bilde">
+{% endif %}
 <p>published {{ entry.pub_date }} by {{ entry.author }}</p>
 {% if entry.members_involved %}
   <h4>Members involved:</h4>
   <ul>
     {% for involved_member in entry.members_involved.all %}
-      <li><a href = "{% url 'guest_book:detail' involved_member.id %}">{{ involved_member }}</a> - {% age_at involved_member entry %} years</li>
+      <li><a href = "{% url 'guest_book:member_detail' involved_member.id %}">{{ involved_member }}</a> - {% age_at involved_member entry %} years</li>
     {% endfor %}
   </ul>
 {% endif %}

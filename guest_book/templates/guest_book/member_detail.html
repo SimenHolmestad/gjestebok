@@ -1,4 +1,7 @@
-<h1>{{ member }}</h1>
+<h1>{{ member }} - {{ member.get_age }} år</h1>
+{% if member.profile_photo %}
+  <img src="{{ member.profile_photo.url }}", alt="profile picture">
+{% endif %}
 <h3>Birth date: {{ member.birth_date }}</h3>
 <h3>Mail: {{ member.email }}</h3>
 <h3>Phone: {{ member.phone }}</h3>
@@ -18,6 +21,7 @@
   <h2>Entrys involved in:</h2>
   {% for involved_entry in involved_entries %}
     {% include "guest_book/entry_base.html" with entry=involved_entry %}
+    <hr>
   {% endfor %}
 {% else %}
   <h2>{{ member.first_name }} does not appear in other entries</h2>

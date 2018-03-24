@@ -1,0 +1,8 @@
+<h1>Edit member: {{ member.name }}</h1>
+<div width=500px>
+  <form enctype="multipart/form-data" action="{% url 'guest_book:edit_member' member.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+  </form>
+</div>

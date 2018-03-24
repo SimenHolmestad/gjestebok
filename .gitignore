@@ -1,2 +1,4 @@
 *.sqlite3
 .DS_STORE
+*.pyc
+media/*
