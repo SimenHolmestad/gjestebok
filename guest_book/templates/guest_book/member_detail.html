@@ -1,30 +1,39 @@
 {% extends 'guest_book/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <h1>{{ member }} - {{ member.get_age }} år</h1>
 {% if member.profile_photo %}
   <img src="{{ member.profile_photo.url }}", alt="profile picture">
 {% endif %}
-<h3>Birth date: {{ member.birth_date }}</h3>
-<h3>Mail: {{ member.email }}</h3>
-<h3>Phone: {{ member.phone }}</h3>
-<h3>About: {{ member.about_me }}</h3>
+{% language 'nb' %}
+<h3>Fødselsdato: {{ member.birth_date|date:'d F o' }}</h3>
+{% endlanguage %}
+{% if member.email %}
+  <h3>E-mail: {{ member.email }}</h3>
+{% endif %}
+{% if member.phone %}
+  <h3>Telefonnummer: {{ member.phone }}</h3>
+{% endif %}
+{% if member.about_me %}
+  <h3>Om meg selv: {{ member.about_me }}</h3>
+{% endif %}
 <hr>
 {% if author_entries %}
-  <h2>Entrys written:</h2>
+  <h2>Innlegg skrevet:</h2>
   {% for author_entry in author_entries %}
     {% include "guest_book/entry_base.html" with entry=author_entry %}
   {% endfor %}
 {% else %}
-  <h2>{{ member.first_name }} has not written any entrys yet </h2>
+  <h2>{{ member.first_name }} har ikke skrevet noen innlegg ennå </h2>
 {% endif %}
 <hr>
 {% if involved_entries %}
-  <h2>Entrys involved in:</h2>
+  <h2>Innlegg vært med på:</h2>
   {% for involved_entry in involved_entries %}
     {% include "guest_book/entry_base.html" with entry=involved_entry %}
   {% endfor %}
 {% else %}
-  <h2>{{ member.first_name }} does not appear in other entries</h2>
+  <h2>{{ member.first_name }} finnes ikke i noen andre innlegg</h2>
 {% endif %}
 {% endblock content %}

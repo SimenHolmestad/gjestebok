@@ -1,15 +1,18 @@
 {% load entry_extras %}
+{% load i18n %}
 <div class="entry-container">
 <h3>{{ entry.title }}</h2>
 {% if entry.image %}
   <img class="entry-image" src="{{ entry.image.url }}", alt="bilde">
 {% endif %}
-<p>published {{ entry.pub_date }} by {{ entry.author }}</p>
+{% language 'nb' %}
+<p>publisert {{ entry.pub_date|date:'l d. F o, H:i' }} av {{ entry.author }}</p>
+{% endlanguage %}
 {% if entry.members_involved %}
-  <h4>Members involved:</h4>
+  <h4>De som var med:</h4>
   <ul>
     {% for involved_member in entry.members_involved.all %}
-      <li><a href = "{% url 'guest_book:member_detail' involved_member.id %}">{{ involved_member }}</a> - {% age_at involved_member entry %} years</li>
+      <li><a href = "{% url 'guest_book:member_detail' involved_member.id %}">{{ involved_member }}</a> - {% age_at involved_member entry %} år</li>
     {% endfor %}
   </ul>
 {% endif %}

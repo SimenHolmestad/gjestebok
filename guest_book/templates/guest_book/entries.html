@@ -1,9 +1,9 @@
 {% extends 'guest_book/base.html' %}
 
 {% block content %}
-<h1>All entries</h1>
+<h1>Alle innlegg:</h1>
 {% if not entries %}
-  <h2>There´s no entries yet</h2>
+  <h2>Det er ingen innlegg ennå</h2>
 {% else %}
   {% for entry in entries %}
     {% include "guest_book/entry_base_edit.html" with entry=entry %}

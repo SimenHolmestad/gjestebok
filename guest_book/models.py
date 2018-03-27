@@ -9,7 +9,7 @@ class Member(models.Model):
     last_name = models.CharField("etternavn", max_length=50)
     phone = models.CharField("mobilnummer", max_length=20, null=True, blank=True)
     number_of_entries = models.IntegerField(default = 0)
-    profile_photo = models.ImageField(null = True, blank = True)
+    profile_photo = models.ImageField(null = True, blank = True, verbose_name="profilbilde")
     email = models.EmailField(
         verbose_name = "e-post",
         max_length=255,
@@ -17,7 +17,7 @@ class Member(models.Model):
         blank=True,
         null=True)
     about_me = models.TextField("litt om meg selv", blank=True, default="")
-    birth_date = models.DateField("Date of birth")
+    birth_date = models.DateField("Fødselsdato")
     def __str__(self):
         return self.first_name + " " + self.last_name
     
@@ -29,16 +29,17 @@ class Member(models.Model):
         return relativedelta(date, self.birth_date).years
 
 class Entry(models.Model):
-    author = models.ForeignKey(Member, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField("date published", default=datetime.now)
-    title = models.CharField(max_length=255, unique=False)
-    text = models.TextField()
-    image = models.ImageField(blank = True, null = True)
+    author = models.ForeignKey(Member, on_delete=models.CASCADE, verbose_name="forfatter")
+    pub_date = models.DateTimeField("dato publisert", default=datetime.now)
+    title = models.CharField(max_length=255, unique=False, verbose_name="tittel")
+    text = models.TextField("tekst")
+    image = models.ImageField(blank = True, null = True, verbose_name="bilde")
     members_involved = models.ManyToManyField(Member,
                                               blank=True,
-                                              related_name="involved_entries")
+                                              related_name="involved_entries",
+                                              verbose_name="medlemmer med")
     def __str__(self):
-        return self.title + " by " + self.author.__str__()
+        return self.title + " av " + self.author.__str__()
     
     def save(self, *args, **kwargs):
         """

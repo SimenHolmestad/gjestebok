@@ -1,5 +1,5 @@
 {% extends 'guest_book/entry_base.html' %}
 {% block edit_links %}
-  <h3><a href="{% url 'guest_book:edit_entry' entry.id %}">edit entry</a></h3>
-  <h3><a href="{% url 'guest_book:delete_entry' entry.id %}">delete entry</a></h3>
+  <h3><a href="{% url 'guest_book:edit_entry' entry.id %}">endre innlegg</a></h3>
+  <h3><a href="{% url 'guest_book:delete_entry' entry.id %}">slett innlegg</a></h3>
 {% endblock edit_links %}

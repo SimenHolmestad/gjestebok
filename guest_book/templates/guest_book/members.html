@@ -1,15 +1,15 @@
 {% extends 'guest_book/base.html' %}
 
 {% block content %}
-<h1>Member List</h1>
+<h1>Medlemsliste</h1>
 {% if members %}
   {% for member in members %}
     <ul>
-      <li><a href="{% url 'guest_book:member_detail' member.id %}">{{ member }}: {{ member.get_age }} years</a> - <a href="{% url 'guest_book:edit_member' member.id %}">edit</a> - <a href="{% url 'guest_book:delete_member' member.id %}">delete</a></li>
+      <li><a href="{% url 'guest_book:member_detail' member.id %}">{{ member }}: {{ member.get_age }} år</a> - <a href="{% url 'guest_book:edit_member' member.id %}">endre</a> - <a href="{% url 'guest_book:delete_member' member.id %}">slett</a></li>
     </ul>
   {% endfor %}
 {% else %}
   <p>There´s no members</p>
 {% endif %}
-<h2><a href="{% url 'guest_book:new_member' %}">Make new member</a></h2>
+<h2><a href="{% url 'guest_book:new_member' %}">Legg til nytt medlem</a></h2>
 {% endblock content %}
