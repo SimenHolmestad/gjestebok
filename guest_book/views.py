@@ -77,7 +77,7 @@ class NewEntry(CreateView):
     success_url = reverse_lazy("guest_book:entries")
 
 class EditEntry(UpdateView):
-    template_name = "guest_book/new_entry.html"
+    template_name = "guest_book/edit_entry.html"
     model = Entry
     form_class = EntryAddForm
     success_url = reverse_lazy("guest_book:entries")

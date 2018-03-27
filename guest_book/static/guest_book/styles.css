@@ -1,0 +1,76 @@
+#header {
+    width:800px;
+    margin:auto;
+    background-color:yellow;
+}
+
+#heading {
+    width:800px;
+    margin:auto;
+    text-align:center;
+}
+
+#heading h1 {
+    margin:0px;
+    padding:15px;
+}
+
+#heading h1 a {
+    color:green;
+    font-family:helvetica;
+    text-decoration:none;
+}
+
+#header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#header li {
+    float: left;
+}
+
+#header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family:helvetica
+}
+
+/* Change the link color to #111 (black) on hover */
+#header li a:hover {
+    background-color: #111;
+}
+
+#content-container {
+    width:800px;
+    margin:auto;
+}
+
+.entry-image-container {
+    width:100%;
+    padding:20px;
+    background-color:green;
+}
+
+.entry-image {
+    max-height:100%;
+    max-width:100%;
+}
+
+.entry-container {
+    background-color:yellow;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.entry-container h3 {
+    margin-top:10px;
+    font-size:28px;
+    font-family:helvetica;
+}

@@ -1,7 +1,8 @@
 {% load entry_extras %}
+<div class="entry-container">
 <h3>{{ entry.title }}</h2>
 {% if entry.image %}
-  <img src="{{ entry.image.url }}", alt="bilde">
+  <img class="entry-image" src="{{ entry.image.url }}", alt="bilde">
 {% endif %}
 <p>published {{ entry.pub_date }} by {{ entry.author }}</p>
 {% if entry.members_involved %}
@@ -13,4 +14,5 @@
   </ul>
 {% endif %}
 <p>{{ entry.text }}</p>
+</div>
 

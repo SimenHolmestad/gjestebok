@@ -1,14 +1,13 @@
-<h1>Hello and welcome to the guest book!</h1>
-<h3><a href="{% url 'guest_book:new_entry' %}">New entry</a></h3>
-<h3><a href="{% url 'guest_book:members' %}">Members</a></h3>
-<h3><a href="{% url 'guest_book:entries' %}">Entries</a></h3>
-<hr>
-{% if not entries %}
-  <h2>There are no entries yet</h2>
-{% else %}
-  <h2>Last entries:</h2>
-  {% for entry in entries %}
-    {% include "guest_book/entry_base.html" with entry=entry %}
-    <hr>
-  {% endfor %}
-{% endif %}
+{% extends 'guest_book/base.html' %}
+
+{% block content %}
+  <div class="entry-container"><h1>Hello and welcome to the guest book!</h1></div>
+  {% if not entries %}
+    <h2>There are no entries yet</h2>
+  {% else %}
+    <h2>Last entries:</h2>
+    {% for entry in entries %}
+      {% include "guest_book/entry_base.html" with entry=entry %}
+    {% endfor %}
+  {% endif %}
+{% endblock content %}

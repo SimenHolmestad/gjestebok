@@ -1,3 +1,6 @@
+{% extends 'guest_book/base.html' %}
+
+{% block content %}
 <h1>{{ member }} - {{ member.get_age }} år</h1>
 {% if member.profile_photo %}
   <img src="{{ member.profile_photo.url }}", alt="profile picture">
@@ -26,3 +29,4 @@
 {% else %}
   <h2>{{ member.first_name }} does not appear in other entries</h2>
 {% endif %}
+{% endblock content %}

@@ -1,3 +1,6 @@
+{% extends 'guest_book/base.html' %}
+
+{% block content %}
 <h1>Edit member: {{ member.name }}</h1>
 <div width=500px>
   <form enctype="multipart/form-data" action="{% url 'guest_book:edit_member' member.id %}" method="post">
@@ -6,3 +9,4 @@
     <input type="submit" value="Submit" />
   </form>
 </div>
+{% endblock content %}

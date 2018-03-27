@@ -1,0 +1,22 @@
+{% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'guest_book/styles.css' %}" />
+{% endblock stylesheets %}
+{% block header %}
+  <div id="header">
+    <div id="heading">
+      <h1><a href="{% url 'guest_book:index' %}">Hytteboka</a></h1>
+    </div>
+    <ul>
+      <li class="menu-item"><a href="{% url 'guest_book:new_entry' %}">New entry</a></li>
+      <li class="menu-item"><a href="{% url 'guest_book:members' %}">Members</a></li>
+      <li class="menu-item"><a href="{% url 'guest_book:entries' %}">Entries</a></li>
+    </ul>
+  </div>
+{% endblock header %}
+
+<div id="content-container">
+  {% block content %}{% endblock content %}
+</div>
+
+

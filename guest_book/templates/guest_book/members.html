@@ -1,3 +1,6 @@
+{% extends 'guest_book/base.html' %}
+
+{% block content %}
 <h1>Member List</h1>
 {% if members %}
   {% for member in members %}
@@ -9,3 +12,4 @@
   <p>There´s no members</p>
 {% endif %}
 <h2><a href="{% url 'guest_book:new_member' %}">Make new member</a></h2>
+{% endblock content %}
