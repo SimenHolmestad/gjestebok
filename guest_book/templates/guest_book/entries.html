@@ -2,14 +2,11 @@
 
 {% block content %}
 <h1>All entries</h1>
-<hr>
 {% if not entries %}
   <h2>There´s no entries yet</h2>
 {% else %}
   {% for entry in entries %}
-    {% include "guest_book/entry_base.html" with entry=entry %}
-    <h3><a href="{% url 'guest_book:edit_entry' entry.id %}">edit entry</a></h3>
-    <h3><a href="{% url 'guest_book:delete_entry' entry.id %}">delete entry</a></h3> 
+    {% include "guest_book/entry_base_edit.html" with entry=entry %}
   {% endfor %}
 {% endif %}
 {% endblock content %}
