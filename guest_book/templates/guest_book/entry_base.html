@@ -5,9 +5,7 @@
 {% if entry.image %}
   <img class="entry-image" src="{{ entry.image.url }}", alt="bilde">
 {% endif %}
-{% language 'nb' %}
 <p>publisert {{ entry.pub_date|date:'l d. F o, H:i' }} av {{ entry.author }}</p>
-{% endlanguage %}
 {% if entry.members_involved %}
   <h4>De som var med:</h4>
   <ul>

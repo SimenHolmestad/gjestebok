@@ -6,9 +6,7 @@
 {% if member.profile_photo %}
   <img src="{{ member.profile_photo.url }}", alt="profile picture">
 {% endif %}
-{% language 'nb' %}
 <h3>Fødselsdato: {{ member.birth_date|date:'d F o' }}</h3>
-{% endlanguage %}
 {% if member.email %}
   <h3>E-mail: {{ member.email }}</h3>
 {% endif %}
