@@ -8,9 +8,8 @@
 {% else %}
   {% for entry in entries %}
     {% include "guest_book/entry_base.html" with entry=entry %}
-    <h3><a href="{% url 'guest_book:edit_entry' entry.id %}">edit entry</a></h3> 
+    <h3><a href="{% url 'guest_book:edit_entry' entry.id %}">edit entry</a></h3>
     <h3><a href="{% url 'guest_book:delete_entry' entry.id %}">delete entry</a></h3> 
-    <hr>
   {% endfor %}
 {% endif %}
 {% endblock content %}
