@@ -98,15 +98,15 @@ class IndexViewTestCase (TestCase):
 
     def test_no_entry(self):
         response = self.client.get(reverse("guest_book:index"))
-        self.assertContains(response, "There are no entries yet")
+        self.assertContains(response, "Det er ingen innlegg ennå")
 
     def test_two_entries_sorted(self):
         entry1 = generate_entry("entry nr.1", -30)
         entry2 = generate_entry("entry nr.2", -5)
         response = self.client.get(reverse("guest_book:index"))
         self.assertQuerysetEqual(response.context["entries"],
-                                 ["<Entry: entry nr.2 by Test Testesen>", 
-                                  "<Entry: entry nr.1 by Test Testesen>"])
+                                 ["<Entry: entry nr.2 av Test Testesen>", 
+                                  "<Entry: entry nr.1 av Test Testesen>"])
 
     def test_last_5_elements(self):
         entry1 = generate_entry("The test is real", -30)
@@ -145,7 +145,7 @@ class Member_detailViewTestCase(TestCase):
         entry = generate_entry_with_author(member1, "The test is real", -200);
         response = self.client.get(reverse("guest_book:member_detail", args=(1,)))
         self.assertQuerysetEqual(response.context["author_entries"],
-                                 ["<Entry: The test is real by Test Testesen>"])
+                                 ["<Entry: The test is real av Test Testesen>"])
         self.assertFalse(response.context["involved_entries"].exists())
 
     def test_involved_articles(self):
@@ -155,7 +155,7 @@ class Member_detailViewTestCase(TestCase):
         entry.members_involved.add(member1)
         response = self.client.get(reverse("guest_book:member_detail", args=(1,)))
         self.assertQuerysetEqual(response.context["involved_entries"],
-                                 ["<Entry: The test is real by Test Testesen>"])
+                                 ["<Entry: The test is real av Test Testesen>"])
         self.assertFalse(response.context["author_entries"].exists())
 
     def test_article_sorting(self):
@@ -166,8 +166,8 @@ class Member_detailViewTestCase(TestCase):
 
         response = self.client.get(reverse("guest_book:member_detail", args=(1,)))
         self.assertQuerysetEqual(response.context["author_entries"],
-                                 ["<Entry: The other test is real by Test Testesen>",
-                                  "<Entry: The test is real by Test Testesen>"])
+                                 ["<Entry: The other test is real av Test Testesen>",
+                                  "<Entry: The test is real av Test Testesen>"])
         self.assertFalse(response.context["involved_entries"].exists())
 
         entry1.members_involved.add(member2)
@@ -175,14 +175,14 @@ class Member_detailViewTestCase(TestCase):
 
         response = self.client.get(reverse("guest_book:member_detail", args=(2,)))
         self.assertQuerysetEqual(response.context["involved_entries"],
-                                 ["<Entry: The other test is real by Test Testesen>",
-                                  "<Entry: The test is real by Test Testesen>"])
+                                 ["<Entry: The other test is real av Test Testesen>",
+                                  "<Entry: The test is real av Test Testesen>"])
         self.assertFalse(response.context["author_entries"].exists())
 
 class entriesViewTestCase(TestCase):
     def test_no_entries(self):
         response = self.client.get(reverse("guest_book:entries"))
-        self.assertContains(response, "There´s no entries yet")
+        self.assertContains(response, "Det er ingen innlegg ennå")
 
     def test_member_ages(self):
         member = generate_member()
@@ -191,4 +191,4 @@ class entriesViewTestCase(TestCase):
         response = self.client.get(reverse("guest_book:entries"))
         print (member.get_age_at(entry.pub_date.date()))
         self.assertContains(response, "Test Testesen")
-        self.assertContains(response, " 1 years")
+        self.assertContains(response, " 1 år")
