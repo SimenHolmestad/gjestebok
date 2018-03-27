@@ -7,14 +7,15 @@ from django.utils import timezone
 class Member(models.Model):
     first_name = models.CharField("fornavn", max_length=50)
     last_name = models.CharField("etternavn", max_length=50)
-    phone = models.CharField("mobilnummer", max_length=20)
+    phone = models.CharField("mobilnummer", max_length=20, null=True, blank=True)
     number_of_entries = models.IntegerField(default = 0)
     profile_photo = models.ImageField(null = True, blank = True)
     email = models.EmailField(
         verbose_name = "e-post",
         max_length=255,
         unique=True,
-        null = True)
+        blank=True,
+        null=True)
     about_me = models.TextField("litt om meg selv", blank=True, default="")
     birth_date = models.DateField("Date of birth")
     def __str__(self):
