@@ -17,7 +17,7 @@ class Member(models.Model):
         blank=True,
         null=True)
     about_me = models.TextField("litt om meg selv", blank=True, default="")
-    birth_date = models.DateField("Fødselsdato")
+    birth_date = models.DateField("Fødselsdato", default=datetime.now)
     def __str__(self):
         return self.first_name + " " + self.last_name
     
