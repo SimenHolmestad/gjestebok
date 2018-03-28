@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.forms import ModelForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 
 class MemberForm(ModelForm):
     class Meta:
@@ -37,10 +38,13 @@ def member_detail(request, member_id):
                "involved_entries":involved_entries}
     return render(request, "guest_book/member_detail.html", context)
 
-def entries(request):
-    entries = Entry.objects.all().order_by("-pub_date")
-    context = {"entries":entries}
-    return render(request, "guest_book/entries.html", context)
+class Entries(ListView):
+    template_name = "guest_book/entries.html"
+    model = Entry
+    context_object_name = "entries"
+    paginate_by = 5
+    def get_queryset(self):
+        return Entry.objects.all().order_by("-pub_date")
 
 def edit_member(request, member_id):
     try:
