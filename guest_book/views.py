@@ -7,6 +7,8 @@ from django.forms import ModelForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
+from datetime import datetime
+import pytz
 
 class MemberForm(ModelForm):
     class Meta:
@@ -23,6 +25,9 @@ def members(request):
     members = Member.objects.all()
     context = {"members":members}
     return render(request, "guest_book/members.html", context)
+
+def search_entries(request):
+    return render(request, "guest_book/search_entries.html",{})
 
 def member_detail(request, member_id):
     try:
@@ -44,7 +49,44 @@ class Entries(ListView):
     context_object_name = "entries"
     paginate_by = 5
     def get_queryset(self):
-        return Entry.objects.all().order_by("-pub_date")
+        objects = Entry.objects.all()
+        get_data = self.request.GET
+
+        if "before_date" in self.request.GET:
+            if get_data["before_date"] != "":
+                before_date=datetime.strptime(get_data["before_date"], "%Y-%m-%d")
+                before_date_aware=pytz.utc.localize(before_date)
+                objects = objects.filter(pub_date__lte=before_date_aware)
+
+        if "search_for" in get_data:
+            if get_data["search_for"] != "":
+                title_objects = objects.filter(title__contains=get_data["search_for"])
+                content_objects = objects.filter(text__contains=get_data["search_for"])
+                objects = title_objects.union(content_objects)
+
+        return objects.order_by('-pub_date')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # creates a get_string to be able to make links to other pages
+        # of a search. Also creates "search descriptive" string to let
+        # the user know what was searched for
+        get_data = self.request.GET
+        get_string=""
+        search_descriptive_string=""
+        if "search_for" in get_data:
+            get_string += "&search_for="
+            get_string += get_data["search_for"]
+            if get_data["search_for"] != "":
+                search_descriptive_string += ("med frasen \"" + get_data["search_for"] + "\" ")
+        if "before_date" in get_data:
+            get_string += "&before_date="
+            get_string += get_data["before_date"]
+            if get_data["before_date"] != "":
+                search_descriptive_string += ("før \"" + get_data["before_date"] + "\" ")
+        context["get_string"] = get_string
+        context["descriptive_string"] = search_descriptive_string
+        return context
 
 def edit_member(request, member_id):
     try:

@@ -1,0 +1,11 @@
+{% extends 'guest_book/base.html' %}
+
+{% block content %}
+<form action="{% url 'guest_book:entries' %}" method="get">
+  Søk etter:
+  <input type="text" name="search_for">
+  Innlegg før:
+  <input type="date" name="before_date">
+  <input type="submit" value="Søk"/>
+</form>
+{% endblock content %}

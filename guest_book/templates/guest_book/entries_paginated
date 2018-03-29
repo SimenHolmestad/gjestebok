@@ -1,0 +1,18 @@
+{% if is_paginated %}
+  <div class="pagination">
+    <span class="page-links">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{{ get_string }}">forrige</a>
+      {% endif %}
+      <span class="page-current">
+        Side {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}.
+      </span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{{ get_string }}">neste</a>
+      {% endif %}
+    </span>
+  </div>
+{% endif %}
+{% for entry in entries %}
+  {% include "guest_book/entry_base_edit.html" with entry=entry %}
+{% endfor %}

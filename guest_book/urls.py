@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name = "index"),
     url(r'^members/$', views.members, name = "members"),
     url(r'^entries/$', views.Entries.as_view() , name = "entries"),
+    url(r'^entries/search_entries/$', views.search_entries , name = "search_entries"),
     url(r'^entries/edit/(?P<pk>[0-9]+)/$', views.EditEntry.as_view(), name = "edit_entry"),
     url(r'^entries/delete/(?P<pk>[0-9]+)/$', views.EntryDelete.as_view(), name = "delete_entry"),
     url(r'^new_entry/$', views.NewEntry.as_view(), name = "new_entry"),
