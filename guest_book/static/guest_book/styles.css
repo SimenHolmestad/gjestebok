@@ -16,7 +16,7 @@
 }
 
 #heading h1 a {
-    color:green;
+    color:black;
     font-family:helvetica;
     text-decoration:none;
 }
@@ -74,4 +74,8 @@
     margin-bottom:10px;
     font-size:28px;
     font-family:helvetica;
+}
+
+#member-photo {
+    max-width:500px;
 }

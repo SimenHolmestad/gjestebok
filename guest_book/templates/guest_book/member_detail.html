@@ -4,7 +4,7 @@
 {% block content %}
 <h1>{{ member }} - {{ member.get_age }} år</h1>
 {% if member.profile_photo %}
-  <img src="{{ member.profile_photo.url }}", alt="profile picture">
+  <img id="member-photo" src="{{ member.profile_photo.url }}", alt="profile picture">
 {% endif %}
 <h3>Fødselsdato: {{ member.birth_date|date:'d F o' }}</h3>
 {% if member.email %}

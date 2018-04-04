@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Entry, Member
-from .forms import EntryAddForm
+from .forms import EntryAddForm, MemberForm
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.forms import ModelForm
@@ -9,11 +9,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from datetime import datetime
 import pytz
-
-class MemberForm(ModelForm):
-    class Meta:
-        model = Member
-        fields = ['first_name', 'last_name', 'birth_date', 'phone', 'email', 'about_me', 'profile_photo']
 
 def index(request):
     members = Member.objects.all()

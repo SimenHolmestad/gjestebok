@@ -3,13 +3,14 @@ from dateutil.relativedelta import relativedelta
 
 from django.db import models
 from django.utils import timezone
+from django_resized import ResizedImageField
 
 class Member(models.Model):
     first_name = models.CharField("fornavn", max_length=50)
     last_name = models.CharField("etternavn", max_length=50)
     phone = models.CharField("mobilnummer", max_length=20, null=True, blank=True)
     number_of_entries = models.IntegerField(default = 0)
-    profile_photo = models.ImageField(null = True, blank = True, verbose_name="profilbilde")
+    profile_photo = ResizedImageField(null = True, blank = True, verbose_name="profilbilde")
     email = models.EmailField(
         verbose_name = "e-post",
         max_length=255,
@@ -33,7 +34,7 @@ class Entry(models.Model):
     pub_date = models.DateTimeField("dato publisert", default=datetime.now)
     title = models.CharField(max_length=255, unique=False, verbose_name="tittel")
     text = models.TextField("tekst")
-    image = models.ImageField(blank = True, null = True, verbose_name="bilde")
+    image = ResizedImageField(blank = True, null = True, verbose_name="bilde")
     members_involved = models.ManyToManyField(Member,
                                               blank=True,
                                               related_name="involved_entries",

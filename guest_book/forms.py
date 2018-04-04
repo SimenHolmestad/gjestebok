@@ -2,6 +2,11 @@ from django import forms
 
 from .models import Member, Entry
 
+class MemberForm(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ['first_name', 'last_name', 'birth_date', 'phone', 'email', 'about_me', 'profile_photo']
+
 class EntryAddForm (forms.ModelForm):
     class Meta:
         model = Entry
