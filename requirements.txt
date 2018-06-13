@@ -1,2 +1,4 @@
 django-cleanup
 django-resized
+python-dateutil
+pillow

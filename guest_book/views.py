@@ -64,8 +64,8 @@ class Entries(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # creates a get_string to be able to make links to other pages
-        # of a search. Also creates "search descriptive" string to let
-        # the user know what was searched for
+        # of a search (pagination). Also creates "search descriptive" 
+        # string to let the user know what was searched for
         get_data = self.request.GET
         get_string=""
         search_descriptive_string=""

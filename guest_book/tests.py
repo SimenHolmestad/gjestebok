@@ -20,10 +20,10 @@ def generate_member():
                                  email = generate_email(),
                                  birth_date = timezone.now())
 
-def create_date(delta_days):
+def create_relative_date(delta_days):
     return timezone.localdate() + datetime.timedelta(days=delta_days)
 
-def create_time(delta_days):
+def create_relative_time(delta_days):
     return timezone.now() + datetime.timedelta(days=delta_days)
 
 class MemberModelTestCase(TestCase):
@@ -34,15 +34,15 @@ class MemberModelTestCase(TestCase):
     
     def test_age(self):
         member = generate_member()
-        member.birth_date = create_date(-368*2)
+        member.birth_date = create_relative_date(-368*2)
         member.save()
         self.assertEqual(member.get_age(), 2)
 
     def test_age_at(self):
         member = generate_member()
-        member.birth_date = create_date(-750)
+        member.birth_date = create_relative_date(-750)
         member.save()
-        self.assertEqual(member.get_age_at(create_date(-370)), 1)
+        self.assertEqual(member.get_age_at(create_relative_date(-370)), 1)
 
 class EntryModelTestCase(TestCase):
     def test_number_of_entries(self):
@@ -55,10 +55,10 @@ class EntryModelTestCase(TestCase):
 
     def test_age_at_creation(self):
         member = generate_member()
-        member.birth_date = create_date(-750)
+        member.birth_date = create_relative_date(-750)
         member.save()
 
-        entry = Entry(author = member, pub_date = create_time(-370))
+        entry = Entry(author = member, pub_date = create_relative_time(-370))
         self.assertEqual(entry.get_author_age_at_creation(), 1)
 
     def test_author_involved(self):
@@ -85,10 +85,10 @@ class EntryModelTestCase(TestCase):
         self.assertEqual(len(entry.members_involved.all()), 3)
 
 def generate_entry(title, pub_date_offset):
-    return Entry.objects.create(author=generate_member(), title = title, pub_date = create_time(pub_date_offset))
+    return Entry.objects.create(author=generate_member(), title = title, pub_date = create_relative_time(pub_date_offset))
 
 def generate_entry_with_author(author, title, pub_date_offset):
-    return Entry.objects.create(author=author, title = title, pub_date = create_time(pub_date_offset))
+    return Entry.objects.create(author=author, title = title, pub_date = create_relative_time(pub_date_offset))
 
 class IndexViewTestCase (TestCase):
     def test_single_entry(self):
@@ -129,7 +129,7 @@ class MembersViewTestCase (TestCase):
         self.assertContains(response, member1.__str__())
         self.assertContains(response, member2.__str__())
 
-class Member_detailViewTestCase(TestCase):
+class MemberDetailViewTestCase(TestCase):
     def test_illegal_member(self):
         response = self.client.get(reverse("guest_book:member_detail", args=(1,)))
         self.assertEqual(response.status_code, 404)
@@ -186,9 +186,39 @@ class entriesViewTestCase(TestCase):
 
     def test_member_ages(self):
         member = generate_member()
-        member.birth_date = create_date(-800)
+        member.birth_date = create_relative_date(-800)
         entry = generate_entry_with_author(member, "The test is real", -300)
         response = self.client.get(reverse("guest_book:entries"))
         print (member.get_age_at(entry.pub_date.date()))
         self.assertContains(response, "Test Testesen")
         self.assertContains(response, " 1 år")
+
+    def test_date_query(self):
+        member = generate_member()
+        entry = generate_entry_with_author(member, "The real test", -300)
+        entry2 = generate_entry_with_author(member, "The fake test", -350)
+        query = {"before_date": create_relative_date(-325)}
+        response = self.client.get(reverse("guest_book:entries"), query)
+        self.assertContains(response, "The fake test");
+        self.assertNotContains(response, "The real test");
+
+    def test_text_query(self):
+        member = generate_member()
+        entry = generate_entry_with_author(member, "The real test", -300)
+        entry2 = generate_entry_with_author(member, "The fake test", -350)
+        query = {"search_for": "real"}
+        response = self.client.get(reverse("guest_book:entries"), query)
+        self.assertContains(response, "The real test");
+        self.assertNotContains(response, "The fake test");
+
+    def test_pagination(self):
+        member = generate_member()
+        entry = generate_entry_with_author(member, "The real test", -300)
+        for i in range(5):
+            generate_entry_with_author(member, "random entry", -200)
+        response = self.client.get(reverse("guest_book:entries"))
+        self.assertNotContains(response, "The real test")
+        response = self.client.get(reverse("guest_book:entries"), {"page":2})
+        self.assertContains(response, "The real test")
+        
+        
